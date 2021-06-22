@@ -13,8 +13,8 @@ app.use(cors());
 app.use(express.json());
 
 // binding api from "API" folder to express app
-app.use("/webapi", home);
-app.use("/webapi", auth);
+app.use("/webapi", home, cors());
+app.use("/webapi", auth, cors());
 
 // for 404
 app.use("*", (req, res) => res.json({ error: "error" }));
