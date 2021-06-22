@@ -1,0 +1,5 @@
+API - /webapi
+    -> home - /
+    -> auth - /webapi/auth
+        -> token - /webapi/auth
+        -> login - /webapi/login
