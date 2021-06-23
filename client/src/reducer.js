@@ -10,6 +10,22 @@ const reducer = (state, action) => {
         accessToken: action.payload.access_token,
         refreshToken: action.payload.refresh_token,
       };
+    case "SEARCH_RESULTS":
+      return {
+        ...state,
+        searchResults: action.payload,
+      };
+    case "CLEAR_SEARCH_RESULTS":
+      return {
+        ...state,
+        searchResults: [],
+      };
+    case "PLAY_SONG":
+      return {
+        ...state,
+        song: [action.payload, ...state.song],
+        isPlaying: true,
+      };
     default:
       Error("YOU DID SOMETHING YOU WERE NOT SUPPOSE TO DO");
       break;
