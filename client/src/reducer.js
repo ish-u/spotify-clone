@@ -5,6 +5,15 @@ const reducer = (state, action) => {
       return state;
     case "ADD_TOKEN":
       console.log("AUTHENTICATED");
+      localStorage.setItem(
+        "intialState",
+        JSON.stringify({
+          ...state,
+          isAuthenticated: true,
+          accessToken: action.payload.access_token,
+          refreshToken: action.payload.refresh_token,
+        })
+      );
       return {
         ...state,
         accessToken: action.payload.access_token,

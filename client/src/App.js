@@ -1,17 +1,20 @@
 import axios from "axios";
-import React, { useReducer, useState, useEffect } from "react";
+import React, { useReducer, useEffect } from "react";
 import reducer from "./reducer.js";
 import { Container } from "react-bootstrap";
 import Player from "./components/Player.js";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Error404 from "./views/Error404.js";
 import Search from "./views/Search.js";
+import Home from "./views/Home.js";
+import SideBar from "./views/SideBar.js";
 
 export const ReducerContext = React.createContext();
 
 function App() {
   // inital state
   const initialState = {
+    isAuthenticated: false,
     accessToken: "",
     refreshToken: "",
     searchResults: [],
@@ -19,11 +22,17 @@ function App() {
     isPlaying: false,
   };
 
+  // saved state in local storage
+  const savedState = localStorage.getItem("intialState");
+
   // using useReducer Hook for State Management
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(
+    reducer,
+    JSON.parse(savedState) || initialState
+  );
 
   // isAuthenticated state
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  // const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   // getting the access token
   const authenticateUser = () => {
@@ -53,7 +62,6 @@ function App() {
         })
         .then((data) => {
           dispatch({ type: "ADD_TOKEN", payload: data });
-          setIsAuthenticated(true);
           window.history.pushState({}, null, "/");
         })
         .catch((error) => {
@@ -65,38 +73,50 @@ function App() {
   return (
     <Router>
       <ReducerContext.Provider value={{ state, dispatch }}>
-        {isAuthenticated && <Player />}
+        {state["isAuthenticated"] && (
+          <>
+            <Player />
+            <SideBar />
+          </>
+        )}
       </ReducerContext.Provider>
 
-      <Switch>
-        <ReducerContext.Provider value={{ state, dispatch }}>
-          <Route exact path="/">
-            <Container className="p-5">
-              <div style={{ textAlign: "center" }}>
-                {!isAuthenticated && (
-                  <button
-                    className="btn btn-primary"
-                    onClick={() => authenticateUser()}
-                  >
-                    LOGIN
-                  </button>
-                )}
-                {isAuthenticated && (
-                  <div>
-                    <Link to="/search">Search</Link>
-                  </div>
-                )}
-              </div>
-            </Container>
-          </Route>
-          <Route path="/search">
-            <Search />
-          </Route>
-        </ReducerContext.Provider>
-        <Route>
-          <Error404 />
-        </Route>
-      </Switch>
+      {!state["isAuthenticated"] && (
+        <Container style={{ textAlign: "center" }} className="p-5">
+          <button
+            className="btn btn-primary"
+            onClick={() => authenticateUser()}
+          >
+            LOGIN
+          </button>
+        </Container>
+      )}
+
+      {state["isAuthenticated"] && (
+        <div
+          style={{
+            position: "fixed",
+            right: "0",
+            width: "80vw",
+            background: "#93BEDF",
+            height: "100vh",
+          }}
+        >
+          <ReducerContext.Provider value={{ state, dispatch }}>
+            <Switch>
+              <Route exact path="/">
+                <Home />
+              </Route>
+              <Route path="/search">
+                <Search />
+              </Route>
+              <Route>
+                <Error404 />
+              </Route>
+            </Switch>
+          </ReducerContext.Provider>
+        </div>
+      )}
     </Router>
   );
 }

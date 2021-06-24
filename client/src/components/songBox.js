@@ -22,6 +22,7 @@ const SongBox = ({ song, dispatch }) => {
         <img
           src={song["album"]["images"][1]["url"]}
           style={{ height: "20vh" }}
+          alt="Song Cover"
         ></img>
       </div>
       <div>

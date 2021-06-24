@@ -51,7 +51,9 @@ const Search = () => {
   }, [query, dispatch]);
 
   return (
-    <Container className="p-5">
+    <Container>
+      <h1>Search</h1>
+      <hr></hr>
       <InputGroup className="mb-3">
         <FormControl
           placeholder="Search"
