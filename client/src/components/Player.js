@@ -12,6 +12,7 @@ const Player = () => {
     margin: "0 auto",
     zIndex: "100",
     maxHeight: "15vh",
+    marginBottom: "5px",
   };
   return (
     <Container fluid style={style}>

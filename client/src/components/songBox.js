@@ -5,7 +5,7 @@ const SongBox = ({ song, dispatch }) => {
   console.log(song);
   return (
     <Col
-      className="col-3 p-3"
+      className="col-3 p-3 align-items-center"
       style={{
         height: "40vh",
         border: "2px solid black",

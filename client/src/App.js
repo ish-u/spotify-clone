@@ -1,9 +1,11 @@
 import axios from "axios";
 import React, { useReducer, useState, useEffect } from "react";
 import reducer from "./reducer.js";
-import { Container, InputGroup, FormControl, Row } from "react-bootstrap";
-import SongBox from "./components/songBox.js";
+import { Container } from "react-bootstrap";
 import Player from "./components/Player.js";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import Error404 from "./views/Error404.js";
+import Search from "./views/Search.js";
 
 export const ReducerContext = React.createContext();
 
@@ -19,33 +21,9 @@ function App() {
 
   // using useReducer Hook for State Management
   const [state, dispatch] = useReducer(reducer, initialState);
+
   // isAuthenticated state
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [query, setQuery] = useState("");
-  useEffect(() => {
-    console.log(query);
-    if (query) {
-      axios
-        .get(
-          `${process.env.REACT_APP_WEB_API}/search/${query}/${state["accessToken"]}`
-        )
-        .then((response) => {
-          dispatch({
-            type: "SEARCH_RESULTS",
-            payload: response.data.data.items,
-          });
-          console.log(response.data.data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    } else {
-      dispatch({
-        type: "CLEAR_SEARCH_RESULTS",
-        payload: "",
-      });
-    }
-  }, [query]);
 
   // getting the access token
   const authenticateUser = () => {
@@ -85,52 +63,41 @@ function App() {
   }, []);
 
   return (
-    <ReducerContext.Provider value={{ state, dispatch }}>
-      <Container className="p-5">
-        <div style={{ textAlign: "center" }}>
-          {!isAuthenticated && (
-            <button
-              className="btn btn-primary"
-              onClick={() => authenticateUser()}
-            >
-              LOGIN
-            </button>
-          )}
-          {isAuthenticated && (
-            <Container>
-              <InputGroup className="mb-3">
-                <FormControl
-                  placeholder="Search"
-                  aria-label="Search Query"
-                  type="text"
-                  name="search"
-                  value={query}
-                  onChange={(e) => {
-                    setQuery(e.target.value);
-                  }}
-                />
-              </InputGroup>
-              <Container className="p-5">
-                <Row style={{ justifyContent: "center" }}>
-                  {state["searchResults"] &&
-                    state["searchResults"].map((r) => {
-                      return (
-                        <SongBox
-                          key={r["uri"]}
-                          song={r}
-                          dispatch={dispatch}
-                        ></SongBox>
-                      );
-                      // return <li key={r["uri"]}>{r["name"]}</li>;
-                    })}
-                </Row>
-              </Container>
-              <Player />
+    <Router>
+      <ReducerContext.Provider value={{ state, dispatch }}>
+        {isAuthenticated && <Player />}
+      </ReducerContext.Provider>
+
+      <Switch>
+        <ReducerContext.Provider value={{ state, dispatch }}>
+          <Route exact path="/">
+            <Container className="p-5">
+              <div style={{ textAlign: "center" }}>
+                {!isAuthenticated && (
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => authenticateUser()}
+                  >
+                    LOGIN
+                  </button>
+                )}
+                {isAuthenticated && (
+                  <div>
+                    <Link to="/search">Search</Link>
+                  </div>
+                )}
+              </div>
             </Container>
-          )}
-        </div>
-      </Container>
-    </ReducerContext.Provider>
+          </Route>
+          <Route path="/search">
+            <Search />
+          </Route>
+        </ReducerContext.Provider>
+        <Route>
+          <Error404 />
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 
