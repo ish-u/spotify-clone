@@ -16,6 +16,7 @@ const reducer = (state, action) => {
         searchResults: action.payload,
       };
     case "CLEAR_SEARCH_RESULTS":
+      console.log("CLEAR");
       return {
         ...state,
         searchResults: [],

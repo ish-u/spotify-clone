@@ -3,6 +3,8 @@ import React, { useState, useContext, useEffect } from "react";
 import { Container, Row, InputGroup, FormControl } from "react-bootstrap";
 import { ReducerContext } from "../App";
 import SongBox from "../components/songBox";
+// cancel token
+let cancelToken;
 
 const Search = () => {
   // getting the App State
@@ -10,31 +12,43 @@ const Search = () => {
 
   // Search Query State
   const [query, setQuery] = useState("");
+
   // Get Search Results
-  const search = (query) => {
-    console.log(query);
-    if (query) {
-      axios
+  useEffect(() => {
+    const search = async (q) => {
+      //Check if there are any previous pending requests
+      if (typeof cancelToken != typeof undefined) {
+        cancelToken.cancel("Operation canceled due to new request.");
+      }
+      console.log(q);
+      cancelToken = axios.CancelToken.source();
+      await axios
         .get(
-          `${process.env.REACT_APP_WEB_API}/search/${query}/${state["accessToken"]}`
+          `${process.env.REACT_APP_WEB_API}/search/${q}/${state["accessToken"]}`,
+          { cancelToken: cancelToken.token }
         )
         .then((response) => {
-          dispatch({
-            type: "SEARCH_RESULTS",
-            payload: response.data.data.items,
-          });
-          console.log(response.data.data);
+          if (q !== "") {
+            console.log(q);
+            dispatch({
+              type: "SEARCH_RESULTS",
+              payload: response.data.data.items,
+            });
+          } else {
+            dispatch({
+              type: "CLEAR_SEARCH_RESULTS",
+            });
+          }
         })
         .catch((error) => {
+          dispatch({
+            type: "CLEAR_SEARCH_RESULTS",
+          });
           console.log(error);
         });
-    } else {
-      dispatch({
-        type: "CLEAR_SEARCH_RESULTS",
-        payload: "",
-      });
-    }
-  };
+    };
+    search(query);
+  }, [query, dispatch]);
 
   return (
     <Container className="p-5">
@@ -47,7 +61,6 @@ const Search = () => {
           value={query}
           onChange={(e) => {
             setQuery(e.target.value);
-            search(e.target.value);
           }}
         />
       </InputGroup>

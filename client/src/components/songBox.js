@@ -2,7 +2,6 @@ import React from "react";
 import { Col } from "react-bootstrap";
 
 const SongBox = ({ song, dispatch }) => {
-  console.log(song);
   return (
     <Col
       className="col-3 p-3 align-items-center"
