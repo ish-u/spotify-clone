@@ -5,6 +5,7 @@ import cors from "cors";
 import home from "./API/home.js";
 import auth from "./API/auth/auth.js";
 import search from "./API/search/search.js";
+import user from "./API/user/user.js";
 
 // Express App
 const app = express();
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use("/webapi", home, cors());
 app.use("/webapi", auth, cors());
 app.use("/webapi", search, cors());
+app.use("/webapi", user, cors());
 
 // for 404
 app.use("*", (req, res) => res.json({ error: "error" }));

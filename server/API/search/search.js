@@ -4,9 +4,6 @@ import express from "express";
 // Express Router
 const router = express.Router();
 
-// exporting the router
-export default router;
-
 router.get("/search/:q/:token", async (req, res) => {
   let token = "Bearer " + req.params.token;
   let requestHeaders = {
@@ -28,3 +25,6 @@ router.get("/search/:q/:token", async (req, res) => {
       console.log(err);
     });
 });
+
+// exporting the router
+export default router;
