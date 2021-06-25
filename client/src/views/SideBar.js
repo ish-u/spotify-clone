@@ -1,23 +1,33 @@
 import React from "react";
-import { Container } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useLocation } from "react-router";
 
 const SideBar = () => {
-  const style = {
-    position: "fixed",
-    left: "0",
-    top: "0",
-    height: "100vh",
-    width: "20vw",
-    background: "#8377D1",
-    color: "black",
-  };
+  const location = useLocation();
   return (
-    <Container className="p-5" style={style}>
-      <Link to="/search">Search</Link>
-      <br></br>
-      <Link to="/">Home</Link>
-    </Container>
+    <div className="side-bar">
+      <Container className="p-3">
+        <Row style={{ flexDirection: "column", rowGap: "1vh" }}>
+          <Col>
+            <div
+              className={`${location.pathname === "/" ? "active" : ""} navLink`}
+            >
+              <Link to="/">Home</Link>
+            </div>
+          </Col>
+          <Col>
+            <div
+              className={`${
+                location.pathname === "/search" ? "active" : ""
+              } navLink`}
+            >
+              <Link to="/search">Search</Link>
+            </div>
+          </Col>
+        </Row>
+      </Container>
+    </div>
   );
 };
 

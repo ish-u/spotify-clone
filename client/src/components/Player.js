@@ -15,13 +15,13 @@ const Player = () => {
   };
   return (
     <Container fluid style={style}>
-      {/* <Container> */}
-      <SpotifyPlayer
-        play={state.isPlaying}
-        token={state["accessToken"]}
-        uris={state.song ? state.song : []}
-      ></SpotifyPlayer>
-      {/* </Container> */}
+      <Container>
+        <SpotifyPlayer
+          play={state.isPlaying}
+          token={state["accessToken"]}
+          uris={state.song ? state.song : []}
+        ></SpotifyPlayer>
+      </Container>
     </Container>
   );
 };

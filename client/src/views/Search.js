@@ -51,30 +51,35 @@ const Search = () => {
   }, [query, dispatch]);
 
   return (
-    <Container>
-      <h1>Search</h1>
-      <hr></hr>
-      <InputGroup className="mb-3">
-        <FormControl
-          placeholder="Search"
-          aria-label="Search Query"
-          type="text"
-          name="search"
-          value={query}
-          onChange={(e) => {
-            setQuery(e.target.value);
-          }}
-        />
-      </InputGroup>
+    <Container fluid>
+      <h1 className="display-1">Search</h1>
       <Container className="p-5">
-        <Row className="justify-content-center">
-          {state["searchResults"] &&
-            state["searchResults"].map((r) => {
-              return (
-                <SongBox key={r["uri"]} song={r} dispatch={dispatch}></SongBox>
-              );
-            })}
-        </Row>
+        <InputGroup className="mb-3">
+          <FormControl
+            placeholder="Search"
+            aria-label="Search Query"
+            type="text"
+            name="search"
+            value={query}
+            onChange={(e) => {
+              setQuery(e.target.value);
+            }}
+          />
+        </InputGroup>
+        <Container className="p-5">
+          <Row className="justify-content-center">
+            {state["searchResults"] &&
+              state["searchResults"].map((r) => {
+                return (
+                  <SongBox
+                    key={r["uri"]}
+                    song={r}
+                    dispatch={dispatch}
+                  ></SongBox>
+                );
+              })}
+          </Row>
+        </Container>
       </Container>
     </Container>
   );

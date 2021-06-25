@@ -1,9 +1,10 @@
 import axios from "axios";
+import "./style.css";
 import React, { useReducer, useEffect } from "react";
 import reducer from "./reducer.js";
 import { Container } from "react-bootstrap";
 import Player from "./components/Player.js";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Error404 from "./views/Error404.js";
 import Search from "./views/Search.js";
 import Home from "./views/Home.js";
@@ -93,28 +94,23 @@ function App() {
       )}
 
       {state["isAuthenticated"] && (
-        <div
-          style={{
-            position: "fixed",
-            right: "0",
-            width: "80vw",
-            background: "#93BEDF",
-            height: "100vh",
-          }}
-        >
-          <ReducerContext.Provider value={{ state, dispatch }}>
-            <Switch>
-              <Route exact path="/">
-                <Home />
-              </Route>
-              <Route path="/search">
-                <Search />
-              </Route>
-              <Route>
-                <Error404 />
-              </Route>
-            </Switch>
-          </ReducerContext.Provider>
+        <div className="main">
+          <Container className="p-5">
+            {" "}
+            <ReducerContext.Provider value={{ state, dispatch }}>
+              <Switch>
+                <Route exact path="/">
+                  <Home />
+                </Route>
+                <Route path="/search">
+                  <Search />
+                </Route>
+                <Route>
+                  <Error404 />
+                </Route>
+              </Switch>
+            </ReducerContext.Provider>
+          </Container>
         </div>
       )}
     </Router>
