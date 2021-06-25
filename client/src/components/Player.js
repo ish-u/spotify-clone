@@ -12,17 +12,18 @@ const Player = () => {
     margin: "0 auto",
     zIndex: "100",
     maxHeight: "15vh",
+    width: "100%",
+    padding: "10px 50px",
+    background: "white",
   };
   return (
-    <Container fluid style={style}>
-      <Container>
-        <SpotifyPlayer
-          play={state.isPlaying}
-          token={state["accessToken"]}
-          uris={state.song ? state.song : []}
-        ></SpotifyPlayer>
-      </Container>
-    </Container>
+    <div style={style}>
+      <SpotifyPlayer
+        play={state.isPlaying}
+        token={state["accessToken"]}
+        uris={state.song ? state.song : []}
+      ></SpotifyPlayer>
+    </div>
   );
 };
 

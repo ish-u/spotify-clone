@@ -38,7 +38,7 @@ function App() {
   // getting the access token
   const authenticateUser = () => {
     var scopes =
-      "user-read-private user-read-email playlist-modify-public playlist-modify-private streaming user-read-email user-read-private user-read-playback-state user-modify-playback-state";
+      "user-read-private user-read-email playlist-modify-public playlist-modify-private streaming user-read-email user-read-private user-read-playback-state user-modify-playback-state user-top-read";
     var authURL =
       "https://accounts.spotify.com/authorize" +
       "?response_type=code" +

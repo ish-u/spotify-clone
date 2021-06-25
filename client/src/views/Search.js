@@ -52,11 +52,20 @@ const Search = () => {
 
   return (
     <Container fluid>
-      <h1 className="display-1">Search</h1>
-      <Container className="p-5">
-        <InputGroup className="mb-3">
+      <Container>
+        <InputGroup
+          className="mb-3"
+          style={{
+            width: "25vw",
+          }}
+        >
           <FormControl
-            placeholder="Search"
+            style={{
+              borderRadius: "25px",
+              padding: "10px",
+              fontSize: "large",
+            }}
+            placeholder="Search..."
             aria-label="Search Query"
             type="text"
             name="search"
