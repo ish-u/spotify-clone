@@ -39,6 +39,9 @@
   color: white;
   overflow-y: scroll;
 }
+
+/* SIDEBAR */
+/*======================================================*/
 .side-bar {
   position: absolute;
   text-align: center;
@@ -82,6 +85,8 @@
   color: white;
 }
 
+/*======================================================*/
+
 .loading {
   display: flex;
   height: 75vh;
@@ -94,7 +99,7 @@
 .top-box {
   display: flex;
   flex-direction: row;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
   height: 75px;
   margin: 10px 2px;

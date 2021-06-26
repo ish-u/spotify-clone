@@ -18,22 +18,19 @@ function App() {
     isAuthenticated: false,
     accessToken: "",
     refreshToken: "",
-    searchResults: [],
+    expiresIn: 0,
     song: "",
     isPlaying: false,
   };
 
   // saved state in local storage
-  const savedState = localStorage.getItem("intialState");
+  const savedState = localStorage.getItem("initialState");
 
   // using useReducer Hook for State Management
   const [state, dispatch] = useReducer(
     reducer,
     JSON.parse(savedState) || initialState
   );
-
-  // isAuthenticated state
-  // const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   // getting the access token
   const authenticateUser = () => {
@@ -63,7 +60,7 @@ function App() {
         })
         .then((data) => {
           dispatch({ type: "ADD_TOKEN", payload: data });
-          window.history.pushState({}, null, "/");
+          window.location = "/";
         })
         .catch((error) => {
           console.log(error);

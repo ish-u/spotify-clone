@@ -8,10 +8,11 @@ let cancelToken;
 
 const Search = () => {
   // getting the App State
-  const { state, dispatch } = useContext(ReducerContext);
+  const { state } = useContext(ReducerContext);
 
   // Search Query State
   const [query, setQuery] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
 
   // Get Search Results
   useEffect(() => {
@@ -29,26 +30,22 @@ const Search = () => {
         )
         .then((response) => {
           if (q !== "") {
-            console.log(q);
-            dispatch({
-              type: "SEARCH_RESULTS",
-              payload: response.data.data.items,
-            });
+            if (response) {
+              setSearchResults(response.data.data.items);
+            }
           } else {
-            dispatch({
-              type: "CLEAR_SEARCH_RESULTS",
-            });
+            setSearchResults([]);
           }
         })
         .catch((error) => {
-          dispatch({
-            type: "CLEAR_SEARCH_RESULTS",
-          });
+          setSearchResults([]);
           console.log(error);
         });
     };
-    search(query);
-  }, [query, dispatch]);
+    if (query !== "") {
+      search(query);
+    }
+  }, [query, state]);
 
   return (
     <Container fluid>
@@ -77,15 +74,9 @@ const Search = () => {
         </InputGroup>
         <Container className="p-5">
           <Row className="justify-content-center">
-            {state["searchResults"] &&
-              state["searchResults"].map((r) => {
-                return (
-                  <SongBox
-                    key={r["uri"]}
-                    song={r}
-                    dispatch={dispatch}
-                  ></SongBox>
-                );
+            {searchResults &&
+              searchResults.map((r) => {
+                return <SongBox key={r["uri"]} song={r}></SongBox>;
               })}
           </Row>
         </Container>

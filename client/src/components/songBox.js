@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Col } from "react-bootstrap";
+import { ReducerContext } from "../App";
 
-const SongBox = ({ song, dispatch }) => {
+const SongBox = ({ song }) => {
+  const { dispatch } = useContext(ReducerContext);
   return (
     <Col
       className="col-3 p-3 align-items-center"

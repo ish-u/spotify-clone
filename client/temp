@@ -1,0 +1,53 @@
+# TRYING INTERCEPTOR
+  // const refresh = () => {
+  //   axios
+  //     .get(
+  //       `${process.env.REACT_APP_WEB_API}/auth/refresh/${state["refreshToken"]}`
+  //     )
+  //     .then((response) => {
+  //       return response.data.response;
+  //     })
+  //     .then((data) => {
+  //       console.log(data);
+  //       dispatch({ type: "REFRESH_TOKEN", payload: data });
+  //       // window.location = "/";
+  //       console.log(state);
+  //       return data;
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
+
+  // axios.interceptors.response.use(
+  //   (res) => {
+  //     console.log("INTERCEPTOR", res);
+  //     return res;
+  //   },
+  //   (err) => {
+  //     console.log("INTERCEPTOR", err);
+  //     // await refresh();
+  //     return err;
+  //   }
+  // );
+
+
+      // case "REFRESH_TOKEN":
+    //   localStorage.setItem(
+    //     "intialState",
+    //     JSON.stringify({
+    //       ...state,
+    //       accessToken: action.payload.access_token,
+    //       expiresIn: action.payload.expires_in,
+    //     })
+    //   );
+    //   console.log({
+    //     ...state,
+    //     accessToken: action.payload.access_token,
+    //     expiresIn: action.payload.expires_in,
+    //   });
+    //   return {
+    //     ...state,
+    //     accessToken: action.payload.access_token,
+    //     expiresIn: action.payload.expires_in,
+    //   };

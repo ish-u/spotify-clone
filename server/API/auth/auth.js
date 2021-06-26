@@ -35,10 +35,10 @@ router.get("/auth/:code", async (req, res) => {
 });
 
 // refresh token route
-router.get("/auth/refresh", async (req, res) => {
+router.get("/auth/refresh/:token", async (req, res) => {
   let requestBody = {
     grant_type: "refresh_token",
-    refresh_token: req.query.token,
+    refresh_token: req.params.token,
     client_id: process.env.CLIENT_ID,
     client_secret: process.env.CLIENT_SECRET,
   };

@@ -6,30 +6,26 @@ const reducer = (state, action) => {
     case "ADD_TOKEN":
       console.log("AUTHENTICATED");
       localStorage.setItem(
-        "intialState",
+        "initialState",
         JSON.stringify({
           ...state,
           isAuthenticated: true,
           accessToken: action.payload.access_token,
           refreshToken: action.payload.refresh_token,
+          expiresIn: action.payload.expires_in,
         })
       );
       return {
         ...state,
+        isAuthenticated: true,
         accessToken: action.payload.access_token,
         refreshToken: action.payload.refresh_token,
+        expiresIn: action.payload.expires_in,
       };
-    case "SEARCH_RESULTS":
-      return {
-        ...state,
-        searchResults: action.payload,
-      };
-    case "CLEAR_SEARCH_RESULTS":
-      console.log("CLEAR");
-      return {
-        ...state,
-        searchResults: [],
-      };
+    case "LOGOUT":
+      console.log(action);
+      localStorage.removeItem("initialState");
+      return {};
     case "PLAY_SONG":
       return {
         ...state,

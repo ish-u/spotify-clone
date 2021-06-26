@@ -16,6 +16,7 @@ const Home = () => {
   // calling api to get the User Data
   useEffect(() => {
     // get user data
+    console.log("useEffect");
     const getUserData = async () => {
       await axios
         .get(`${process.env.REACT_APP_WEB_API}/me/${state["accessToken"]}`)
@@ -42,7 +43,7 @@ const Home = () => {
     };
     getUserData();
     getTop();
-  }, []);
+  }, [state]);
 
   return (
     <>
