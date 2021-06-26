@@ -15,11 +15,12 @@ router.get("/search/:q/:token", async (req, res) => {
   };
   await axios
     .get(
-      `https://api.spotify.com/v1/search?q=${req.params.q}&limit=3&type=track`,
+      `https://api.spotify.com/v1/search?q=${req.params.q}&limit=5&type=track,album,artist`,
       requestHeaders
     )
     .then((response) => {
-      res.send({ data: response.data.tracks });
+      console.log(response.data);
+      res.send(response.data);
     })
     .catch((err) => {
       console.log(err);
