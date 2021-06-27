@@ -16,7 +16,7 @@ router.get("/me/:token", async (req, res) => {
     },
   };
   await axios
-    .get(`https://api.spotify.com/v1/me`, requestHeaders)
+    .get("https://api.spotify.com/v1/me", requestHeaders)
     .then((response) => {
       res.send(response.data);
     })
@@ -41,7 +41,7 @@ router.get("/me/top/:token", async (req, res) => {
   top = [
     ...top,
     ...(await axios
-      .get(`https://api.spotify.com/v1/me/top/artists?limit=4`, requestHeaders)
+      .get("https://api.spotify.com/v1/me/top/artists?limit=4", requestHeaders)
       .then((response) => {
         return response.data.items;
       })
@@ -54,7 +54,7 @@ router.get("/me/top/:token", async (req, res) => {
   top = [
     ...top,
     ...(await axios
-      .get(`https://api.spotify.com/v1/me/top/tracks?limit=4`, requestHeaders)
+      .get("https://api.spotify.com/v1/me/top/tracks?limit=4", requestHeaders)
       .then((response) => {
         let tracks = [];
         response.data.items.forEach((track) => {
@@ -73,48 +73,71 @@ router.get("/me/top/:token", async (req, res) => {
   res.status(401).send();
 });
 
+// get the tracks and albums recently played by the User
+router.get("/me/recent/:token", (req, res) => {
+  let token = "Bearer " + req.params.token;
+  let requestHeaders = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token,
+      Accept: "application/json",
+    },
+  };
+
+  axios
+    .get("https://api.spotify.com/v1/me/player/recently-played", requestHeaders)
+    .then((response) => {
+      console.log(response.data);
+      res.send(response.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+/*DOES NOT WORK*/
 // get the User Current Player Settings
-router.get("/me/player/:token", (req, res) => {
-  let token = "Bearer " + req.params.token;
-  let requestHeaders = {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: token,
-      Accept: "application/json",
-    },
-  };
+// router.get("/me/player/:token", (req, res) => {
+//   let token = "Bearer " + req.params.token;
+//   let requestHeaders = {
+//     headers: {
+//       "Content-Type": "application/json",
+//       Authorization: token,
+//       Accept: "application/json",
+//     },
+//   };
 
-  axios
-    .get(`https://api.spotify.com/v1/me/player`, requestHeaders)
-    .then((response) => {
-      console.log(response);
-      res.send(response.data);
-    })
-    .catch((err) => console.log(err));
-});
+//   axios
+//     .get(`https://api.spotify.com/v1/me/player`, requestHeaders)
+//     .then((response) => {
+//       console.log(response);
+//       res.send(response.data);
+//     })
+//     .catch((err) => console.log(err));
+// });
 
-router.get("/me/player/:token/:id", (req, res) => {
-  let token = "Bearer " + req.params.token;
-  let requestBody = {
-    device_ids: [req.params.id],
-  };
+// router.get("/me/player/:token/:id", (req, res) => {
+//   let token = "Bearer " + req.params.token;
+//   let requestBody = {
+//     device_ids: [req.params.id],
+//   };
 
-  console.log(qs.stringify(requestBody));
-  let requestHeaders = {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: token,
-      Accept: "application/json",
-    },
-  };
+//   console.log(qs.stringify(requestBody));
+//   let requestHeaders = {
+//     headers: {
+//       "Content-Type": "application/json",
+//       Authorization: token,
+//       Accept: "application/json",
+//     },
+//   };
 
-  axios
-    .put(`https://api.spotify.com/v1/me/player`, requestBody, requestHeaders)
-    .then((response) => {
-      res.send(response.data);
-    })
-    .catch((err) => console.log(err));
-});
+//   axios
+//     .put(`https://api.spotify.com/v1/me/player`, requestBody, requestHeaders)
+//     .then((response) => {
+//       res.send(response.data);
+//     })
+//     .catch((err) => console.log(err));
+// });
 
 // exporting the router
 export default router;

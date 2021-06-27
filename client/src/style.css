@@ -19,6 +19,14 @@
   background: #1d4350;
 }
 
+body a {
+  text-decoration: none;
+  color: white;
+}
+body a:hover {
+  color: white;
+}
+
 .main {
   position: absolute;
   top: 0;
@@ -269,10 +277,19 @@
 .album-cover-container {
   height: 40vh;
   padding: 10px;
+  margin-bottom: 40px;
   background-color: hsla(195, 47%, 21%, 0.5);
   box-shadow: 1px 1px 10px black;
   border-radius: 10px;
 }
+.album-cover-container a {
+  text-decoration: none;
+  color: white;
+}
+.album-cover-container a:hover {
+  color: white;
+}
+
 .album-cover {
   height: 100%;
   display: flex;
@@ -286,4 +303,39 @@
   border-radius: 5px;
   padding: 5px;
 }
+/*======================================================*/
+
+/*ALBUM TRACK*/
+/*======================================================*/
+.album-track-container {
+  margin-top: 25px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.album-track-container:hover {
+  box-shadow: 1px 1px 20px black;
+}
+
+.album-track {
+  background: linear-gradient(to right, #a43931, #1d4350);
+  box-shadow: 1px 1px 10px black;
+  border-radius: 10px;
+  height: 50px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+.album-track-name-number {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.album-track span {
+  font-size: x-large;
+}
+
 /*======================================================*/

@@ -4,8 +4,10 @@ import express from "express";
 // Express Router
 const router = express.Router();
 
-router.get("/search/:q/:token", async (req, res) => {
+// getting a Album
+router.get("/album/:id/:token", (req, res) => {
   let token = "Bearer " + req.params.token;
+  let id = req.params.id;
   let requestHeaders = {
     headers: {
       "Content-Type": "application/json",
@@ -13,11 +15,9 @@ router.get("/search/:q/:token", async (req, res) => {
       Accept: "application/json",
     },
   };
-  await axios
-    .get(
-      `https://api.spotify.com/v1/search?q=${req.params.q}&limit=20&type=track,album,artist`,
-      requestHeaders
-    )
+
+  axios
+    .get(`https://api.spotify.com/v1/albums/${id}`, requestHeaders)
     .then((response) => {
       console.log(response.data);
       res.send(response.data);
