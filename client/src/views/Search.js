@@ -11,6 +11,8 @@ import {
 import { ReducerContext } from "../App";
 import TrackBox from "../components/TrackBox";
 import TopSearchBox from "../components/TopSearchBox";
+import AlbumBox from "../components/AlbumBox";
+import ArtitsBox from "../components/ArtitsBox";
 // cancel token
 let cancelToken;
 
@@ -73,67 +75,98 @@ const Search = () => {
   }, [query, state]);
 
   return (
-    <Container fluid>
-      <Container>
-        <InputGroup
-          className="mb-3"
+    <Container fluid className="p-5">
+      <InputGroup
+        className="mb-3"
+        style={{
+          width: "25vw",
+        }}
+      >
+        <FormControl
           style={{
-            width: "25vw",
+            borderRadius: "25px",
+            padding: "10px",
+            fontSize: "large",
           }}
-        >
-          <FormControl
-            style={{
-              borderRadius: "25px",
-              padding: "10px",
-              fontSize: "large",
-            }}
-            placeholder="Search..."
-            aria-label="Search Query"
-            type="text"
-            name="search"
-            value={query}
-            onChange={(e) => {
-              setQuery(e.target.value);
-            }}
-          />
-        </InputGroup>
-        {loading && (
-          <Container fluid className="p-5" style={{ textAlign: "center" }}>
-            <Spinner animation="grow" />
-          </Container>
-        )}
-        {!loading && (
-          <Container className="p-3">
-            <Row className="justify-content-center">
-              <Col lg={4}>
-                {(artists.length || tracks.length || albums.length) !== 0 && (
-                  <TopSearchBox
-                    artist={artists.length ? artists[0] : []}
-                    track={tracks.length ? tracks[0].album : []}
-                    album={albums.length ? albums[0].album : []}
-                  ></TopSearchBox>
-                )}
-              </Col>
-              <Col>
-                {tracks.map((track) => {
-                  return (
+          placeholder="Search..."
+          aria-label="Search Query"
+          type="text"
+          name="search"
+          value={query}
+          onChange={(e) => {
+            setQuery(e.target.value);
+          }}
+        />
+      </InputGroup>
+      {loading && (
+        <Container fluid className="p-5" style={{ textAlign: "center" }}>
+          <Spinner animation="grow" />
+        </Container>
+      )}
+      {!loading && (
+        <Container fluid className="mb-5">
+          <Row>
+            <Container className="p-3">
+              <Row className="gy-5">
+                <Col xl={4} lg={6} md={12} sm={12} xs={12}>
+                  {(artists.length || tracks.length || albums.length) !== 0 && (
                     <>
-                      <TrackBox key={track.uri} track={track}></TrackBox>
+                      <TopSearchBox
+                        artist={artists.length ? artists[0] : null}
+                        track={tracks.length ? tracks[0].album : null}
+                        album={albums.length ? albums[0] : null}
+                      ></TopSearchBox>
                     </>
-                  );
-                })}
-              </Col>
-            </Row>
-            <Row>
-              {/* <Col>
-              {artists.map((artist) => {
-                return <li key={artist.uri}>{artist.name}</li>;
-              })}
-            </Col> */}
-            </Row>
-          </Container>
-        )}
-      </Container>
+                  )}
+                </Col>
+                <Col>
+                  {tracks.length !== 0 && (
+                    <>
+                      <TrackBox tracks={tracks}></TrackBox>
+                    </>
+                  )}
+                </Col>
+              </Row>
+            </Container>
+          </Row>
+          <Row>
+            {albums.length !== 0 && (
+              <Container className="p-3">
+                <Row>
+                  <span className="display-4">Albums</span>
+                  <br></br>
+                </Row>
+                <Row className="scroller">
+                  {albums.length !== 0 &&
+                    albums.map((album) => {
+                      return (
+                        <AlbumBox key={album.uri} album={album}></AlbumBox>
+                      );
+                    })}
+                </Row>
+              </Container>
+            )}
+          </Row>
+          <Row>
+            {artists.length !== 0 && (
+              <Container className="p-3">
+                <Row>
+                  <span className="display-4">Artists</span>
+                  <br></br>
+                </Row>
+                <Row className="scroller">
+                  {artists.length !== 0 &&
+                    artists.map((artist) => {
+                      return (
+                        <ArtitsBox key={artist.uri} artist={artist}></ArtitsBox>
+                      );
+                    })}
+                </Row>
+              </Container>
+            )}
+          </Row>
+        </Container>
+      )}
     </Container>
   );
 };

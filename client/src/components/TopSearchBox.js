@@ -1,16 +1,24 @@
 import React from "react";
 
 const TopSearchBox = ({ track, artist, album }) => {
-  const top = artist || track || album;
-  console.log(top);
+  let top = "";
+  if (artist !== null) {
+    top = artist;
+  } else if (track !== null) {
+    top = track;
+  } else if (album !== null) {
+    top = album;
+  }
   return (
     <>
-      {top.length !== 0 && (
+      <div className="top-result-container">
+        <span className="display-4">Top Result</span>
+        <br></br>
         <div className="top-result">
-          <img src={top.images[0].url}></img>
+          <img alt="Top Result" src={top.images[0].url}></img>
           <span>{top.name}</span>
         </div>
-      )}
+      </div>
     </>
   );
 };

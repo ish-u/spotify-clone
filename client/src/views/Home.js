@@ -11,14 +11,15 @@ const Home = () => {
   // user state
   const [user, setUser] = useState("");
   const [top, setTop] = useState([]);
+  const [recent, setRecent] = useState([]);
   const [loading, setLoading] = useState(true);
 
   // calling api to get the User Data
   useEffect(() => {
     // get user data
     console.log("useEffect");
-    const getUserData = async () => {
-      await axios
+    const getUserData = () => {
+      axios
         .get(`${process.env.REACT_APP_WEB_API}/me/${state["accessToken"]}`)
         .then((response) => {
           setUser(response.data);
@@ -29,20 +30,37 @@ const Home = () => {
     };
 
     // get user top artists and tracks
-    const getTop = async () => {
-      await axios
+    const getTop = () => {
+      axios
         .get(`${process.env.REACT_APP_WEB_API}/me/top/${state["accessToken"]}`)
         .then((response) => {
           console.log(response.data);
           setTop(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
+    // get user recently played artitst, albums and tracks
+    const getRecent = () => {
+      axios
+        .get(
+          `${process.env.REACT_APP_WEB_API}/me/recent/${state["accessToken"]}`
+        )
+        .then((response) => {
+          console.log(response.data.items);
+          setRecent(response.data.items);
           setLoading(false);
         })
         .catch((error) => {
           console.log(error);
         });
     };
+
     getUserData();
     getTop();
+    getRecent();
   }, [state]);
 
   return (
@@ -53,7 +71,7 @@ const Home = () => {
         </Container>
       )}
       {!loading && (
-        <Container fluid>
+        <Container fluid className="p-5">
           <span className="display-4">
             Welcome, <b>{user["display_name"]}</b>
           </span>
@@ -67,9 +85,18 @@ const Home = () => {
                     key={topElement["uri"]}
                     name={topElement["name"]}
                     img={topElement["images"][1]["url"]}
+                    id={topElement["id"]}
+                    type={topElement["type"]}
                   ></TopBox>
                 );
               })}
+            </Row>
+            <Row>
+              {/* <ul>
+                {recent.map((r) => {
+                  return <li>{r.track.name}</li>;
+                })}
+              </ul> */}
             </Row>
           </Container>
         </Container>

@@ -5,10 +5,12 @@ import reducer from "./reducer.js";
 import { Container } from "react-bootstrap";
 import Player from "./components/Player.js";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Error404 from "./views/Error404.js";
-import Search from "./views/Search.js";
 import Home from "./views/Home.js";
 import SideBar from "./views/SideBar.js";
+import Search from "./views/Search.js";
+import Artist from "./views/Artist.js";
+import Album from "./views/Album.js";
+import Error404 from "./views/Error404.js";
 
 export const ReducerContext = React.createContext();
 
@@ -35,7 +37,7 @@ function App() {
   // getting the access token
   const authenticateUser = () => {
     var scopes =
-      "user-read-private user-read-email playlist-modify-public playlist-modify-private streaming user-read-email user-read-private user-read-playback-state user-modify-playback-state user-top-read";
+      "user-read-private user-read-email playlist-modify-public playlist-modify-private streaming user-read-email user-read-private user-read-playback-state user-modify-playback-state user-top-read user-read-recently-played";
     var authURL =
       "https://accounts.spotify.com/authorize" +
       "?response_type=code" +
@@ -92,7 +94,7 @@ function App() {
 
       {state["isAuthenticated"] && (
         <div className="main">
-          <Container className="p-5">
+          <Container>
             {" "}
             <ReducerContext.Provider value={{ state, dispatch }}>
               <Switch>
@@ -101,6 +103,12 @@ function App() {
                 </Route>
                 <Route path="/search">
                   <Search />
+                </Route>
+                <Route path="/artist/:id">
+                  <Artist />
+                </Route>
+                <Route path="/album/:id">
+                  <Album />
                 </Route>
                 <Route>
                   <Error404 />
