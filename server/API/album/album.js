@@ -19,7 +19,7 @@ router.get("/album/:id/:token", (req, res) => {
   axios
     .get(`https://api.spotify.com/v1/albums/${id}`, requestHeaders)
     .then((response) => {
-      console.log(response.data);
+      console.log(response.status);
       res.send(response.data);
     })
     .catch((err) => {
