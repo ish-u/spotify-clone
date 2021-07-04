@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const TopSearchBox = ({ track, artist, album }) => {
   let top = "";
@@ -11,14 +12,16 @@ const TopSearchBox = ({ track, artist, album }) => {
   }
   return (
     <>
-      <div className="top-result-container">
-        <span className="display-4">Top Result</span>
-        <br></br>
-        <div className="top-result">
-          <img alt="Top Result" src={top.images[0].url}></img>
-          <span>{top.name}</span>
+      <Link to={`/${top.type}/${top.id}`}>
+        <div className="top-result-container">
+          <span className="display-4">Top Result</span>
+          <br></br>
+          <div className="top-result">
+            <img alt="Top Result" src={top.images[0].url}></img>
+            <span>{top.name}</span>
+          </div>
         </div>
-      </div>
+      </Link>
     </>
   );
 };

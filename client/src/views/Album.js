@@ -26,7 +26,7 @@ const Album = () => {
           )
           .then((response) => {
             setAlbum(response.data);
-            console.log(response.data);
+            // console.log(response.data);
           })
           .catch((err) => console.log(err));
       }
@@ -36,7 +36,7 @@ const Album = () => {
   }, [id, state]);
 
   return (
-    <Container fluid className="p-5 ">
+    <Container fluid className="p-5">
       <Row>
         {album !== null && (
           <div className="album-cover-container">

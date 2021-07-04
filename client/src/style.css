@@ -171,6 +171,7 @@ body a:hover {
 .track-box:hover {
   background-color: #a4393185;
   box-shadow: 1px 1px 10px black;
+  cursor: pointer;
 }
 /*======================================================*/
 
@@ -314,12 +315,12 @@ body a:hover {
   justify-content: center;
 }
 .album-track-container:hover {
-  box-shadow: 1px 1px 20px black;
+  box-shadow: 1px 1px 10px black;
 }
 
 .album-track {
-  background: linear-gradient(to right, #a43931, #1d4350);
-  box-shadow: 1px 1px 10px black;
+  /* background: linear-gradient(to right, #a43931, #1d4350); */
+  /* box-shadow: 1px 1px 10px black; */
   border-radius: 10px;
   height: 50px;
   width: 100%;
@@ -338,4 +339,37 @@ body a:hover {
   font-size: x-large;
 }
 
+/*======================================================*/
+
+/*ARTIST VIEW*/
+/*======================================================*/
+.artist-info-container {
+  height: 40vh;
+  margin-bottom: 40px;
+  background-color: hsla(195, 47%, 21%, 0.5);
+  box-shadow: 1px 1px 10px black;
+  border-radius: 10px;
+}
+.artist-info {
+  height: inherit;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.artist-info img {
+  height: 80%;
+  padding: 5px;
+  border-radius: 50%;
+}
+.album-section {
+  height: 40vh;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-y: hidden;
+  overflow-x: scroll;
+  justify-content: center;
+  align-items: center;
+}
 /*======================================================*/

@@ -1,5 +1,6 @@
 import React from "react";
 import { Col } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const TopBox = ({ name, img, id, type }) => {
   return (
@@ -7,7 +8,7 @@ const TopBox = ({ name, img, id, type }) => {
       <div className="top-box">
         <img alt={name} src={img}></img>
         <span>
-          <a href={`/${type}/${id}`}>{name}</a>
+          <Link to={`/${type}/${id}`}>{name}</Link>
         </span>
       </div>
     </Col>

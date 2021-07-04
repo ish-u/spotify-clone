@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { ReducerContext } from "../App";
 
 const TrackBox = ({ tracks }) => {
-  console.log(tracks);
+  // console.log(tracks);
   const { dispatch } = useContext(ReducerContext);
   const time = (ms) => {
     var s = parseInt(ms / 1000);
@@ -14,7 +14,7 @@ const TrackBox = ({ tracks }) => {
       <br></br>
       {tracks.map((track) => {
         return (
-          <>
+          <div key={track.uri}>
             <div
               className="track-box"
               onClick={() => {
@@ -30,7 +30,7 @@ const TrackBox = ({ tracks }) => {
                 {time(track.duration_ms)}
               </div>
             </div>
-          </>
+          </div>
         );
       })}
     </div>

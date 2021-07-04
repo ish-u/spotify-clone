@@ -1,11 +1,11 @@
 import React from "react";
 import { Col } from "react-bootstrap";
 
-const AlbumTrack = ({ track }) => {
+const AlbumTrack = ({ track, isInArtist, index }) => {
   // get the time in m:s
   const time = (ms) => {
-    var s = parseInt(ms / 1000);
-    return parseInt(s / 60) + ":" + (s % 60);
+    var time = new Date(ms).toISOString().substr(15, 4);
+    return time;
   };
 
   return (
@@ -13,7 +13,9 @@ const AlbumTrack = ({ track }) => {
       <div className="album-track-container">
         <div className="album-track">
           <div className="album-track-name-number">
-            <span className="mx-5">{track.track_number}</span>
+            <span className="mx-5">
+              {!isInArtist ? track.track_number : index}
+            </span>
             <span>{track.name}</span>
           </div>
           <div className="mx-5">
