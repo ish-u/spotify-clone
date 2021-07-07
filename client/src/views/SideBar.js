@@ -32,6 +32,16 @@ const SideBar = () => {
             </div>
           </Col>
           <Col>
+            <div
+              className={`${
+                location.pathname === "/createPlaylist" ? "active" : ""
+              } navLink`}
+            >
+              <Link to="/createPlaylist">Playlist</Link>
+            </div>
+          </Col>
+
+          <Col>
             <div className="navLink">
               <a onClick={logOut} href="/">
                 Logout

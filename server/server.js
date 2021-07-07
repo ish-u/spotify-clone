@@ -8,6 +8,7 @@ import search from "./API/search/search.js";
 import user from "./API/user/user.js";
 import albums from "./API/album/album.js";
 import artists from "./API/artist/artist.js";
+import playlists from "./API/Playlist/Playlist.js";
 
 // Express App
 const app = express();
@@ -23,6 +24,7 @@ app.use("/webapi", search, cors());
 app.use("/webapi", user, cors());
 app.use("/webapi", albums, cors());
 app.use("/webapi", artists, cors());
+app.use("/webapi", playlists, cors());
 
 // for 404
 app.use("*", (req, res) => res.json({ error: "error" }));

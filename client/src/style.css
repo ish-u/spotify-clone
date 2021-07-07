@@ -373,3 +373,13 @@ body a:hover {
   align-items: center;
 }
 /*======================================================*/
+
+/* PLAYLIST CONTAINER */
+/*======================================================*/
+.playlist-container {
+  height: 70vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  padding: 10px;
+}
+/*======================================================*/

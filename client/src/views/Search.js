@@ -12,7 +12,8 @@ import { ReducerContext } from "../App";
 import TrackBox from "../components/TrackBox";
 import TopSearchBox from "../components/TopSearchBox";
 import AlbumBox from "../components/AlbumBox";
-import ArtitsBox from "../components/ArtitsBox";
+import ArtitsBox from "../components/ArtistBox";
+
 // cancel token
 let cancelToken;
 

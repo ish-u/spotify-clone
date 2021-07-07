@@ -6,7 +6,7 @@ import TopBox from "../components/TopBox";
 
 const Home = () => {
   // getting the App State
-  const { state } = useContext(ReducerContext);
+  const { state, dispatch } = useContext(ReducerContext);
 
   // user state
   const [user, setUser] = useState("");
@@ -23,6 +23,9 @@ const Home = () => {
         .get(`${process.env.REACT_APP_WEB_API}/me/${state["accessToken"]}`)
         .then((response) => {
           setUser(response.data);
+          if (state["id"] === null) {
+            dispatch({ type: "SET_USER_ID", payload: response.data.id });
+          }
         })
         .catch((error) => {
           console.log(error);
@@ -61,7 +64,7 @@ const Home = () => {
     getUserData();
     getTop();
     getRecent();
-  }, [state]);
+  }, []);
 
   return (
     <>

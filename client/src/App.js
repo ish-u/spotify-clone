@@ -10,6 +10,7 @@ import SideBar from "./views/SideBar.js";
 import Search from "./views/Search.js";
 import Artist from "./views/Artist.js";
 import Album from "./views/Album.js";
+import Playlist from "./views/Playlist.js";
 import Error404 from "./views/Error404.js";
 
 export const ReducerContext = React.createContext();
@@ -23,6 +24,7 @@ function App() {
     expiresIn: 0,
     song: "",
     isPlaying: false,
+    id: null,
   };
 
   // saved state in local storage
@@ -103,6 +105,9 @@ function App() {
                 </Route>
                 <Route path="/search">
                   <Search />
+                </Route>
+                <Route path="/createPlaylist">
+                  <Playlist />
                 </Route>
                 <Route path="/artist/:id">
                   <Artist />

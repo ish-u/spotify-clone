@@ -32,6 +32,11 @@ const reducer = (state, action) => {
         song: [action.payload, ...state.song],
         isPlaying: true,
       };
+    case "SET_USER_ID":
+      return {
+        ...state,
+        id: action.payload,
+      };
     default:
       Error("YOU DID SOMETHING YOU WERE NOT SUPPOSE TO DO");
       break;
