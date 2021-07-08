@@ -9,6 +9,7 @@ import {
   Button,
 } from "react-bootstrap";
 import { ReducerContext } from "../App.js";
+import PlaylistBox from "../components/PlaylistBox.js";
 
 // cancel token
 let cancelToken;
@@ -24,6 +25,7 @@ const Playlist = () => {
   const [playlistTracks, setPlaylistTracks] = useState([]);
   const [playlistName, setPlaylistName] = useState("");
   const [playlistDescription, setPlaylistDescription] = useState("");
+  const [playlists, setPlaylists] = useState([]);
 
   // Get Search Results
   useEffect(() => {
@@ -55,6 +57,21 @@ const Playlist = () => {
           console.log(error);
         });
     };
+
+    // get users Current Playlist
+    const getPlaylist = () => {
+      axios
+        .get(
+          `${process.env.REACT_APP_WEB_API}/getPlaylist/${state["accessToken"]}`
+        )
+        .then((response) => {
+          console.log(response);
+          setPlaylists(response.data.items);
+        })
+        .catch((err) => console.log(err));
+    };
+
+    getPlaylist();
     if (query !== "") {
       search(query);
     }
@@ -63,6 +80,7 @@ const Playlist = () => {
     };
   }, [query, state]);
 
+  // create a Playlist
   const createPlaylist = async () => {
     // extracting the Track URIs
     let URIS = [];
@@ -77,20 +95,22 @@ const Playlist = () => {
     };
 
     // making the POST request
-    const playlistID = await axios
+    let playlistID = "";
+    await axios
       .post(
         `${process.env.REACT_APP_WEB_API}/createPlaylist/${state["id"]}/${state["accessToken"]}`,
         body
       )
       .then((response) => {
-        return response.data.id;
+        playlistID = response.data;
         console.log(response);
       })
       .catch((err) => console.log(err));
 
+    console.log(playlistID);
     await axios
       .post(
-        `${process.env.REACT_APP_WEB_API}/addToPlaylist/${playlistID}/${state["id"]}/${state["accessToken"]}`,
+        `${process.env.REACT_APP_WEB_API}/addToPlaylist/${playlistID}/${state["accessToken"]}`,
         {
           uris: URIS.join(","),
         }
@@ -103,14 +123,23 @@ const Playlist = () => {
 
   return (
     <Container fluid className="p-5">
-      <Row></Row>
-      <Row>
+      <h1 className="display-4">Playlists</h1>
+      <Row className="scroller mb-5">
+        {playlists.length !== 0 &&
+          playlists.map((playlist) => {
+            return (
+              <PlaylistBox key={playlist.id} playlist={playlist}></PlaylistBox>
+            );
+          })}
+      </Row>
+      <h1 className="display-4">Create Playlist</h1>
+      <Row className="mt-5" style={{ height: "60vh" }}>
         <Col xl={6} lg={6}>
-          <Container>
+          <Container fluid>
             <InputGroup
               className="mb-3"
               style={{
-                width: "25vw",
+                width: "30vw",
                 margin: "0 auto",
               }}
             >
@@ -125,7 +154,6 @@ const Playlist = () => {
                 }}
               />
             </InputGroup>
-
             {tracks.length !== 0 && (
               <div className="playlist-container">
                 {tracks.map((track) => {
@@ -156,7 +184,7 @@ const Playlist = () => {
         </Col>
         <Col xl={6} lg={6}>
           {playlistTracks.length !== 0 && (
-            <Container>
+            <Container fluid>
               <InputGroup
                 className="mb-3"
                 style={{
