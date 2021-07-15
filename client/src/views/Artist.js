@@ -3,7 +3,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { ReducerContext } from "../App";
 import { Container, Row } from "react-bootstrap";
-import AlbumTrack from "../components/AlbumTrack.js";
+import AlbumTrack from "../components/Track.js";
 import AlbumBox from "../components/AlbumBox.js";
 
 const Artist = () => {
@@ -80,7 +80,7 @@ const Artist = () => {
             {artist !== null && (
               <div className="artist-info-container">
                 <div className="artist-info">
-                  <img src={artist.images[0].url}></img>
+                  <img alt="Artist" src={artist.images[0].url}></img>
                   <span>
                     <h1 className="display-1">{artist.name}</h1>
                   </span>

@@ -64,7 +64,7 @@ const Home = () => {
     getUserData();
     getTop();
     getRecent();
-  }, []);
+  }, [dispatch, state]);
 
   return (
     <>

@@ -6,7 +6,7 @@ const reducer = (state, action) => {
     case "ADD_TOKEN":
       console.log("AUTHENTICATED");
       localStorage.setItem(
-        "initialState",
+        "state",
         JSON.stringify({
           ...state,
           isAuthenticated: true,
@@ -24,7 +24,7 @@ const reducer = (state, action) => {
       };
     case "LOGOUT":
       console.log(action);
-      localStorage.removeItem("initialState");
+      localStorage.removeItem("state");
       return {};
     case "PLAY_SONG":
       return {
@@ -36,6 +36,12 @@ const reducer = (state, action) => {
       return {
         ...state,
         id: action.payload,
+      };
+    case "REFRESH_TOKEN":
+      console.log(action.payload);
+      return {
+        ...state,
+        accessToken: action.payload,
       };
     default:
       Error("YOU DID SOMETHING YOU WERE NOT SUPPOSE TO DO");

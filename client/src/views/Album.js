@@ -3,7 +3,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { Container, Row } from "react-bootstrap";
 import { useParams } from "react-router";
 import { ReducerContext } from "../App";
-import AlbumTrack from "../components/AlbumTrack.js";
+import Track from "../components/Track.js";
 import { Link } from "react-router-dom";
 const Album = () => {
   // getting the App State
@@ -65,7 +65,7 @@ const Album = () => {
       <Row className="mb-5">
         {album !== null &&
           album.tracks.items.map((track) => {
-            return <AlbumTrack key={track.uri} track={track}></AlbumTrack>;
+            return <Track key={track.uri} track={track}></Track>;
           })}
       </Row>
     </Container>

@@ -22,8 +22,6 @@ router.post("/createPlaylist/:user_id/:token", async (req, res) => {
     public: false,
   };
 
-  console.log(qs.stringify(requestBody));
-
   await axios
     .post(
       `https://api.spotify.com/v1/users/${user_id}/playlists`,
@@ -31,7 +29,7 @@ router.post("/createPlaylist/:user_id/:token", async (req, res) => {
       requestHeaders
     )
     .then((response) => {
-      console.log(response.data);
+      console.log(response.status);
       res.send(response.data.id);
     })
     .catch((err) => {
@@ -83,12 +81,33 @@ router.get("/getPlaylist/:token", (req, res) => {
       Accept: "application/json",
     },
   };
-  let requestBody = {};
 
   axios
     .get("https://api.spotify.com/v1/me/playlists?limit=40", requestHeaders)
     .then((response) => {
       console.log(response.data.items.length);
+      res.send(response.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+// get a Playlist from Playlist ID
+router.get("/playlist/:playlist_id/:token", (req, res) => {
+  let token = "Bearer " + req.params.token;
+  let requestHeaders = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token,
+      Accept: "application/json",
+    },
+  };
+  let playlist_id = req.params.playlist_id;
+  axios
+    .get(`https://api.spotify.com/v1/playlists/${playlist_id}`, requestHeaders)
+    .then((response) => {
+      console.log(response.data);
       res.send(response.data);
     })
     .catch((err) => {

@@ -1,7 +1,8 @@
 import React from "react";
 import { Col } from "react-bootstrap";
 
-const AlbumTrack = ({ track, isInArtist, index }) => {
+const Track = ({ track, isInArtist, index }) => {
+  console.log(track);
   // get the time in m:s
   const time = (ms) => {
     var time = new Date(ms).toISOString().substr(15, 4);
@@ -27,4 +28,4 @@ const AlbumTrack = ({ track, isInArtist, index }) => {
   );
 };
 
-export default AlbumTrack;
+export default Track;
